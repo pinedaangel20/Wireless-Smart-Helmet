@@ -1,0 +1,6 @@
+[submodule ".openocd"]
+	path = .openocd
+	url = https://gitlab.tugraz.at/microcontroller/openocd.git
+[submodule ".pico-sdk"]
+	path = .pico-sdk
+	url = https://gitlab.tugraz.at/microcontroller/pico-sdk.git
