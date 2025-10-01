@@ -22,11 +22,6 @@ It includes a simple CMake configuration and example source files (`main.c`, `le
 
 1. **Clone the repository**
 
-    ```bash
-    git clone https://github.com/your-username/your-project.git
-    cd your-project
-    ```
-
 2. **Initialize the submodules**
 
     ```bash
