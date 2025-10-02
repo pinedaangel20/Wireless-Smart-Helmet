@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Microcontroller" targetName="A1" />
+      <config projectName="Microcontroller" targetName="A2" />
+      <config projectName="Microcontroller" targetName="A3" />
+      <config projectName="Microcontroller" targetName="bs2_default_bin" />
+      <config projectName="Microcontroller" targetName="bs2_default_padded_checksummed_asm" />
+      <config projectName="Microcontroller" targetName="cyw43_driver_picow_cyw43_bus_pio_spi_pio_h" />
+      <config projectName="Microcontroller" targetName="pioasmBuild" />
+      <config projectName="Microcontroller" targetName="bs2_default" />
+      <config projectName="Microcontroller" targetName="A0" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9bba820f-dbc8-4ad4-9ad8-06d38541f25a" name="Changes" comment="updated A1" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="EmbeddedSvdWindowState">
+    <option name="columnWidths">
+      <list>
+        <option value="212" />
+        <option value="92" />
+        <option value="2127" />
+      </list>
+    </option>
+    <option name="columnOrder">
+      <list>
+        <option value="Name" />
+        <option value="Value" />
+        <option value="Description" />
+      </list>
+    </option>
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:RPI Pico" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="C Header File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/A0/main.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/A1/gpio.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/TU/MIC_24/matteo/src/A1/gpio.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/A1/main.c" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;00000000&quot;
+}</component>
+  <component name="ProjectId" id="2mwblAjmRKg128j7tG253sMQzlT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.A1.executor&quot;: &quot;Run&quot;,
+    &quot;OpenOCD Download &amp; Run.A0.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;
+  }
+}</component>
+  <component name="RunManager" selected="CMake Application.A1">
+    <configuration name="A0" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="A0" CONFIG_NAME="RPI Pico" RUN_TARGET_PROJECT_NAME="Microcontroller" RUN_TARGET_NAME="A0">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="A1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="A1" CONFIG_NAME="RPI Pico" RUN_TARGET_PROJECT_NAME="Microcontroller" RUN_TARGET_NAME="A1">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="A2" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="A2" CONFIG_NAME="RPI Pico" RUN_TARGET_PROJECT_NAME="Microcontroller" RUN_TARGET_NAME="A2">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="A3" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="A3" CONFIG_NAME="RPI Pico" RUN_TARGET_PROJECT_NAME="Microcontroller" RUN_TARGET_NAME="A3">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bs2_default" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="bs2_default" CONFIG_NAME="RPI Pico" RUN_TARGET_PROJECT_NAME="Microcontroller" RUN_TARGET_NAME="bs2_default">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bs2_default_bin" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="bs2_default_bin" CONFIG_NAME="RPI Pico">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bs2_default_padded_checksummed_asm" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="bs2_default_padded_checksummed_asm" CONFIG_NAME="RPI Pico">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cyw43_driver_picow_cyw43_bus_pio_spi_pio_h" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="cyw43_driver_picow_cyw43_bus_pio_spi_pio_h" CONFIG_NAME="RPI Pico">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="pioasmBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Microcontroller" TARGET_NAME="pioasmBuild" CONFIG_NAME="RPI Pico">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.A0" />
+      <item itemvalue="CMake Application.A1" />
+      <item itemvalue="CMake Application.A2" />
+      <item itemvalue="CMake Application.A3" />
+      <item itemvalue="CMake Application.bs2_default" />
+      <item itemvalue="CMake Application.bs2_default_bin" />
+      <item itemvalue="CMake Application.bs2_default_padded_checksummed_asm" />
+      <item itemvalue="CMake Application.cyw43_driver_picow_cyw43_bus_pio_spi_pio_h" />
+      <item itemvalue="CMake Application.pioasmBuild" />
+      <item itemvalue="OpenOCD Download &amp; Run.A0" />
+      <item itemvalue="OpenOCD Download &amp; Run.A1" />
+      <item itemvalue="OpenOCD Download &amp; Run.A2" />
+      <item itemvalue="OpenOCD Download &amp; Run.A3" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9bba820f-dbc8-4ad4-9ad8-06d38541f25a" name="Changes" comment="" />
+      <created>1727990735836</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727990735836</updated>
+      <workItem from="1727990737268" duration="694000" />
+      <workItem from="1727991451968" duration="24000" />
+      <workItem from="1727991482441" duration="752000" />
+      <workItem from="1727992297125" duration="1992000" />
+      <workItem from="1728075459990" duration="50000" />
+      <workItem from="1728075524805" duration="1058000" />
+      <workItem from="1728077749336" duration="105000" />
+      <workItem from="1728086266552" duration="727000" />
+      <workItem from="1728239818218" duration="236000" />
+      <workItem from="1729523954820" duration="25000" />
+      <workItem from="1729523986886" duration="7424000" />
+      <workItem from="1729975966634" duration="931000" />
+      <workItem from="1730675910548" duration="848000" />
+      <workItem from="1731364732667" duration="3732000" />
+      <workItem from="1731537947908" duration="1411000" />
+      <workItem from="1731595171311" duration="1710000" />
+      <workItem from="1731717428949" duration="3000" />
+      <workItem from="1731792596827" duration="610000" />
+      <workItem from="1732186588424" duration="3519000" />
+      <workItem from="1732273005246" duration="492000" />
+    </task>
+    <task id="LOCAL-00001" summary="A0 done">
+      <option name="closed" value="true" />
+      <created>1727992337819</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727992337819</updated>
+    </task>
+    <task id="LOCAL-00002" summary="A0 and A1 almost done">
+      <option name="closed" value="true" />
+      <created>1731371153088</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731371153088</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updated A1">
+      <option name="closed" value="true" />
+      <created>1732273273471</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732273273471</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="A0 done" />
+    <MESSAGE value="A0 and A1 almost done" />
+    <MESSAGE value="updated A1" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated A1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/A0/main.c</url>
+          <line>19</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
