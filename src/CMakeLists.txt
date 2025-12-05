@@ -69,4 +69,6 @@ add_custom_target(copy_uf2 ALL
 COMMENT "Copying ${PROJECT_NAME}.uf2 to top-level build directory"
 )
 
+add_dependencies(copy_uf2 ${PROJECT_NAME})
+
 

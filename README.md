@@ -35,6 +35,18 @@ Open `src/CMakeLists.txt` and update:
     * Add your source files to `SOURCE_FILES`.
     * Add required libraries to `LIB_SOURCES` (e.g. `hardware_gpio`, `hardware_pwm`).
 
-4. **Build and flash the project**
+4. **Install C compiler (option)**  
+If you have already installed a C compiler, you can skip this step.  
+You can check if either gcc or clang is installed by running:
+    ```bash
+    clang --version
+    ```
+    ```bash
+    gcc --version
+    ```
+    There are multiuple guides on how to install either on the internet,   
+    an example for gcc on Windows 11 is: https://www.youtube.com/watch?v=pTtF6TKJpo8
+
+5. **Build and flash the project**
     Manually or with the IDE, just like in the assignments before.
 
