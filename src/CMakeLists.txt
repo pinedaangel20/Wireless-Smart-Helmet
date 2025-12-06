@@ -8,15 +8,9 @@
 
 cmake_minimum_required(VERSION 3.12)
 
-# Set pico config infos
-set(PICO_BOARD pico)
-set(PICO_PLATFORM rp2040)
-
-
 ############################################################
 ##                   STUDENT TODO START                   ##
 ############################################################
-
 
 #TODO: Change Blink to your project name
 project(Blink C CXX ASM)
