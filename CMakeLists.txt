@@ -11,9 +11,8 @@ cmake_minimum_required(VERSION 3.12)
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
-# Set pico config infos
+# Set board config. All supported boards can be found in .pico-sdk/src/boards/include
 set(PICO_BOARD pico)
-set(PICO_PLATFORM rp2040)
 
 # Pull in PICO SDK
 include(pico_sdk_import.cmake)

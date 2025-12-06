@@ -1,5 +1,7 @@
 set(PICO_SDK_PATH "../.pico-sdk")
-set(PICO_NO_PICOTOOL false)
+
+# Set to false to enable picotool build
+set(PICO_NO_PICOTOOL true)
 
 get_filename_component(PICO_SDK_PATH "${PICO_SDK_PATH}" REALPATH BASE_DIR "${CMAKE_BINARY_DIR}")
 if (NOT EXISTS ${PICO_SDK_PATH})

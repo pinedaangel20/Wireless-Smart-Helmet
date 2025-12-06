@@ -62,13 +62,12 @@ set(PICO_DEFAULT_BINARY_DIR ${CMAKE_BINARY_DIR})
 # Generate the uf2 file
 pico_add_extra_outputs(${PROJECT_NAME})
 
+if (NOT ${PICO_NO_PICOTOOL})
 add_custom_target(copy_uf2 ALL
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_BINARY_DIR}/src/${PROJECT_NAME}.uf2
         ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.uf2
 COMMENT "Copying ${PROJECT_NAME}.uf2 to top-level build directory"
 )
-
 add_dependencies(copy_uf2 ${PROJECT_NAME})
-
-
+endif ()
