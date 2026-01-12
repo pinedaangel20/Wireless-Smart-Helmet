@@ -13,13 +13,21 @@ cmake_minimum_required(VERSION 3.12)
 ############################################################
 
 #TODO: Change Blink to your project name
-project(Blink C CXX ASM)
+project(Bike_Blinker C CXX ASM)
 
 #TODO: Change the files to be included in your project 
 set(SOURCE_FILES
         # Place your source files here:
         main.c
+        adc.c
+        buttons.c
+        gpio.c
+        hall.c 
+        i2c.c
         led.c
+        oled.c 
+        pwm.c 
+        utils.c
 )
 
 #TODO: if you use libraries for the Pico, add them here
