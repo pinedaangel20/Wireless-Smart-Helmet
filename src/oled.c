@@ -1,6 +1,11 @@
 #include "oled.h"
+#include "stdio.h"
 
 static uint8_t oled_buffer[(SSD1306_HEIGHT * SSD1306_WIDTH) / 8];
+
+static int cursor_x = 0;
+static int cursor_y = 0;
+static int starting_x = 0;
 
 void oled_init() 
 {
@@ -131,5 +136,53 @@ void oled_set_pixel(int x, int y, int color)
   else 
   {
     oled_buffer[index] &= ~(1 << bit);
+  }
+}
+
+void oled_draw_char(char c)
+{
+  // empieza en la columna 0 y fila 0 hasta las ultimas
+  oled_send_command(SSD1306_COLUMN_ADDR);
+  oled_send_command(cursor_x);
+  oled_send_command(SSD1306_WIDTH - 1);
+  oled_send_command(SSD1306_PAGE_ADDR);
+  oled_send_command(cursor_y);
+  oled_send_command((SSD1306_HEIGHT / 8) - 1);
+
+  int start_index = 32; 
+  int char_ascii = (int)c;
+  int stride = 5;
+
+  int index = stride * (char_ascii - start_index);
+
+  for (int i = 0; i < stride; i++)
+  {
+    oled_send_data(font[index++]);
+  }
+
+  cursor_x += stride + 1; // espacio entre letras
+  if (cursor_x >= SSD1306_WIDTH)
+  {
+    cursor_x = starting_x;
+    cursor_y ++;
+  }
+  
+  
+}
+
+void oled_set_cursor(int x, int y)
+{
+  cursor_x = x;
+  cursor_y = y;
+  starting_x = cursor_x;
+}
+
+void oled_print(const char *string)
+{
+// mientras no se acabe el string
+  while (*string) 
+  {
+    oled_draw_char(*string); // dibuja letra actual
+    string++; // avanzamos el puntero a la siguiente letra
   }
 }

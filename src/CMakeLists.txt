@@ -13,7 +13,7 @@ cmake_minimum_required(VERSION 3.12)
 ############################################################
 
 #TODO: Change Blink to your project name
-project(Bike_Blinker C CXX ASM)
+project(group-bikeblinker C CXX ASM)
 
 #TODO: Change the files to be included in your project 
 set(SOURCE_FILES

@@ -1,5 +1,6 @@
 #pragma once
 #include "i2c.h"
+#include "font.h"
 
 // * I2C BASE REGISTER ADDRESS
 #define SSD1306_I2C_ADDR 0x3C 
@@ -71,3 +72,22 @@ void oled_send_data(int byte);
  * @param color 1 si se pinta, 0 si no
  */
 void oled_set_pixel(int x, int y, int color);
+
+/**
+ * @brief Dibuja un caracter en la pantalla OLED usando una fuente 5x7
+ * @param c caracter que se debe de dibujar
+ */
+void oled_draw_char(char c);
+
+/**
+ * @brief Configura la posicion x, y del cursor para dibujar un caracter
+ * @param x posicion x del cursor
+ * @param y posicion y del cursor
+ */
+void oled_set_cursor(int x, int y);
+
+/**
+ * @brief Imprime un string en la pantalla OLED
+ * @param string palabra por imprimir
+ */
+void oled_print(const char* string);
