@@ -3,10 +3,8 @@
 
 // * VALORES MAX Y MINIMO DEL HALL
 // TODO cambiar por valores correctos al conectar los componentes
-#define HALL_MIN_VAL 10
-#define HALL_MAX_VAL 1000
-#define BREAK_MIN_TH 10
-#define BREAK_MAX_TH 1000
+#define HALL_MIN_VAL 17
+#define HALL_MAX_VAL 60
 
 /**
  * @brief Calcula el porcentaje actual relativo al freno y

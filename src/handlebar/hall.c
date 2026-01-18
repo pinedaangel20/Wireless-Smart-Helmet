@@ -26,5 +26,5 @@ float read_break_percentage()
     return 0.0;
   }
   
-  return percentage;
+  return 100.f - percentage;
 }
