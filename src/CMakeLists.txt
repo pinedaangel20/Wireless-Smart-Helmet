@@ -19,6 +19,7 @@ set(SOURCES
     
     # Archivos compartidos
     shared/utils.c
+    shared/funkmodul.c
 )
 
 # Librerías del SDK necesarias

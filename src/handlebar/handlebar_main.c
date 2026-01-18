@@ -37,18 +37,34 @@ void system_shutdown_visuals()
 
 int main() 
 {    
-    // inicializa LED, Botones y Switch en modo GPIO normal 
-    my_gpio_init();      
-    // inicializa el ADC y conecta el canal 0 para el Hall
+  // Inicializar GPIO básico 
+  my_gpio_init();
+
+  while(1)
+  {
+    if (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
+    {
+      system_shutdown_visuals();
+      
+      // esperar aqui hasta que el usuario encienda el switch
+      while (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
+      {
+        wait_us(100000); 
+      }
+      // arrancamos el sistema
+    }
+
     my_adc_init();       
     my_adc_select_input(HALL_ADC_CHANNEL); 
-    // Inicializa pantalla OLED
-    oled_init();         
+    
+    oled_init(); // enciende pantalla y resetea config
     oled_clear();
+    
+    funkmodulInitTx();// inicializa funkmodul
 
-    // prueba de vida al encender
+    // prueba de vida
     for(int i = 0; i < 3; i++)
-     {
+    {
       turnLedOn();
       wait_us(150000);
       turnLedOff();
@@ -59,106 +75,18 @@ int main()
     
     // variables de estado
     int dots = 0;
-    int last_switch_state = -1; // -1 fuerza a pintar la pantalla la primera vez
-    int last_screen_code = -1; // para no borrar la pantalla si no cambia el mensaje
-
-    while(1) 
-    {
-      switch(current_state) 
-      {
-        case STATE_BOOT:
-          oled_set_cursor(30, 3);
-          oled_print("WELCOME");
-          wait_us(BOOT_DELAY_US);
-          oled_clear();
-          current_state = STATE_PAIRING;
-          break;
-
-        case STATE_PAIRING:
-          oled_set_cursor(20, 3);
-          oled_print("PAIRING");
-            
-          // Bucle de 10 pasos x 0.5s = 5 segundos
-          for(int i=0; i<PAIRING_STEPS; i++) 
-          {
-            oled_set_cursor(80, 3);
-            if(dots == 0) 
-            {
-              oled_print("   "); // borra puntos viejos
-            } 
-            if(dots > 0) 
-            {
-              oled_print(".");
-            }
-            if(dots > 1) 
-            {
-              oled_print(".");
-            }
-            if(dots > 2) 
-            {
-              oled_print(".");
-            }
-            
-            dots++;
-            if(dots > 3) 
-int main() 
-{    
-  // Inicializar GPIO básico para leer el Switch Maestro antes de arrancar nada
-  my_gpio_init();
-
-  // --- BUCLE DE PODER (MASTER SWITCH LOOP) ---
-  while(1)
-  {
-    // 1. VERIFICAR INTERRUPTOR MAESTRO
-    // Si el switch está en HIGH (Abierto/Apagado), no arrancamos nada.
-    if (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
-    {
-      system_shutdown_visuals();
-      
-      // Esperar aquí infinitamente hasta que el usuario encienda el switch
-      while (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
-      {
-        wait_us(100000); 
-      }
-      // Al salir de aquí, significa que se encendió: Arrancamos el sistema
-    }
-
-    // 2. INICIALIZACIÓN DE HARDWARE (REINICIO)
-    // Se ejecuta cada vez que "Enciendes" el switch
-    my_adc_init();       
-    my_adc_select_input(HALL_ADC_CHANNEL); 
-    
-    oled_init(); // Enciende pantalla y resetea config
-    oled_clear();
-    
-    funkmodulInitTx(); // Inicializa el Radio Real
-
-    // Prueba de vida al encender
-    for(int i = 0; i < 3; i++)
-    {
-      turnLedOn();
-      wait_us(150000);
-      turnLedOff();
-      wait_us(150000);
-    }
-
-    system_state current_state = STATE_BOOT;
-    
-    // Variables de estado
-    int dots = 0;
     int last_switch_state = -1;
     int last_screen_code = -1;
     
-    // Variable de control para mantener el sistema corriendo
+    // variable de control para mantener el sistema corriendo
     int system_is_on = 1;
 
-    // --- BUCLE DEL PROGRAMA PRINCIPAL ---
+    // bucle principal
     while(system_is_on) 
     {
-      // Chequeo constante del Switch para apagado inmediato
       if (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
       {
-        system_is_on = 0; // Rompe este bucle y vuelve al Bucle de Poder
+        system_is_on = 0; // rompe este bucle y vuelve al bucle de poder
         break;
       }
 
