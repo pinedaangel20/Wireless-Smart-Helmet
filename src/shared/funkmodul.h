@@ -8,9 +8,9 @@
 // Elegidos para NO chocar con tus pines actuales:
 // LED 16, SWITCH 18, botones 19/20, I2C 4/5
 // Usa pines libres: 10-14 como ejemplo.
-#define NRF_CE_PIN   13
-#define NRF_CSN_PIN  14
-#define NRF_SCK_PIN  10
+#define NRF_CE_PIN 14 
+#define NRF_CSN_PIN 13 
+#define NRF_SCK_PIN 10
 #define NRF_MOSI_PIN 11
 #define NRF_MISO_PIN 12
 

@@ -6,6 +6,7 @@
 #include "i2c.h"
 #include "oled.h"
 #include "utils.h"
+#include "funkmodul.h"
 
 // Configuraciones de tiempo
 #define BOOT_DELAY_US 2000000 
@@ -21,6 +22,18 @@ typedef enum {
     STATE_CONNECTED,
     STATE_RUNNING
 } system_state;
+
+// protocol codes
+#define CODE_IDLE 0
+#define CODE_LEFT 1
+#define CODE_RIGHT 2
+#define CODE_BRAKE 3
+
+void system_shutdown_visuals() 
+{
+  turnLedOff();
+  oled_send_command(SSD1306_DISPLAY_OFF); // apaga pantalla OLED
+}
 
 int main() 
 {    
@@ -88,14 +101,124 @@ int main()
             
             dots++;
             if(dots > 3) 
+int main() 
+{    
+  // Inicializar GPIO básico para leer el Switch Maestro antes de arrancar nada
+  my_gpio_init();
+
+  // --- BUCLE DE PODER (MASTER SWITCH LOOP) ---
+  while(1)
+  {
+    // 1. VERIFICAR INTERRUPTOR MAESTRO
+    // Si el switch está en HIGH (Abierto/Apagado), no arrancamos nada.
+    if (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
+    {
+      system_shutdown_visuals();
+      
+      // Esperar aquí infinitamente hasta que el usuario encienda el switch
+      while (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
+      {
+        wait_us(100000); 
+      }
+      // Al salir de aquí, significa que se encendió: Arrancamos el sistema
+    }
+
+    // 2. INICIALIZACIÓN DE HARDWARE (REINICIO)
+    // Se ejecuta cada vez que "Enciendes" el switch
+    my_adc_init();       
+    my_adc_select_input(HALL_ADC_CHANNEL); 
+    
+    oled_init(); // Enciende pantalla y resetea config
+    oled_clear();
+    
+    funkmodulInitTx(); // Inicializa el Radio Real
+
+    // Prueba de vida al encender
+    for(int i = 0; i < 3; i++)
+    {
+      turnLedOn();
+      wait_us(150000);
+      turnLedOff();
+      wait_us(150000);
+    }
+
+    system_state current_state = STATE_BOOT;
+    
+    // Variables de estado
+    int dots = 0;
+    int last_switch_state = -1;
+    int last_screen_code = -1;
+    
+    // Variable de control para mantener el sistema corriendo
+    int system_is_on = 1;
+
+    // --- BUCLE DEL PROGRAMA PRINCIPAL ---
+    while(system_is_on) 
+    {
+      // Chequeo constante del Switch para apagado inmediato
+      if (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) 
+      {
+        system_is_on = 0; // Rompe este bucle y vuelve al Bucle de Poder
+        break;
+      }
+
+      switch(current_state) 
+      {
+        case STATE_BOOT:
+          oled_set_cursor(30, 3);
+          oled_print("WELCOME");
+          wait_us(BOOT_DELAY_US);
+          oled_clear();
+          current_state = STATE_PAIRING;
+          break;
+
+        case STATE_PAIRING:
+          oled_set_cursor(20, 3);
+          oled_print("PAIRING");
+          
+          // bucle de intentos
+          for(int i=0; i<PAIRING_STEPS; i++) 
+          {
+            // chequeo de seguridad por si se apaga el switch durante el pairing
+            if (get_gpio_l(SWITCH_PIN) == HIGH_LEVEL) { system_is_on = 0; break; }
+
+            // puntos
+            oled_set_cursor(80, 3);
+            if(dots == 0) 
+            {
+              oled_print("   "); // borrar puntos
+            }
+            if(dots > 0) 
+            {
+              oled_print(".");
+            }
+            if(dots > 1) 
+            {
+              oled_print(".");
+            }
+            if(dots > 2) 
+            {
+              oled_print(".");
+            }
+            
+            dots++;
+            if(dots > 3) 
             {
               dots = 0;
             }
             
-            ledToggle(); // parpadeo
+            ledToggle(); 
+
+            // ver si el otro mc nos responde
+            if (funkmodulSendByte(CODE_IDLE)) 
+            {
+              // Si responde, salimos del bucle de intentos antes de tiempo
+              break; 
+            }
+
             wait_us(PAIRING_STEP_US);
           }
-
+          
           current_state = STATE_CONNECTED;
           break;
 
@@ -104,88 +227,88 @@ int main()
           oled_set_cursor(10, 3);
           oled_print("CONECTED!");
           turnLedOn(); 
-          wait_us(2000000); // 2 segundosh
+          wait_us(2000000); 
           oled_clear();
           current_state = STATE_RUNNING;
           break;
 
         case STATE_RUNNING: 
         {
-          int switch_val = get_gpio_l(SWITCH_PIN); 
-          if(switch_val == HIGH_LEVEL) 
+          if(last_switch_state != 1) 
           {
-            // MODO APAGADO / STANDBY 
-            if(last_switch_state != 0) 
-            {
-              oled_clear();
-              oled_set_cursor(20, 3);
-              oled_print("SWITCH OFF");
-              turnLedOff();
-              last_switch_state = 0;
-              last_screen_code = -1; // reset codigo de pantalla
-            }
-          } 
-          else 
+            oled_clear(); 
+            last_switch_state = 1;
+          }
+
+          float brake_pct = read_break_percentage();
+          int is_breaking = (brake_pct > 50.0f); 
+          
+          int left_pressed = (get_gpio_l(LEFT_BUTTON) == LOW_LEVEL); 
+          int right_pressed = (get_gpio_l(RIGHT_BUTTON) == LOW_LEVEL);
+
+          // envia datos por radio
+          uint8_t data_to_send = CODE_IDLE;
+          if (is_breaking) 
           {
-            // RIDE
-            if(last_switch_state != 1) 
+            data_to_send = CODE_BRAKE;
+          }
+          else if (left_pressed) 
+          {
+            data_to_send = CODE_LEFT;
+          }
+          else if (right_pressed) 
+          {
+            data_to_send = CODE_RIGHT;
+          }
+          
+          funkmodulSendByte(data_to_send);
+
+          int current_code = (is_breaking << 2) | (left_pressed << 1) | right_pressed;
+
+          if(current_code != last_screen_code) 
+          {
+            oled_clear();
+            if(is_breaking) 
             {
-              oled_clear(); // Borrar "SWITCH OFF"
-              last_switch_state = 1;
-            }
-
-            float brake_pct = read_break_percentage();
-            int is_breaking = (brake_pct > 50.0f); // Umbral de freno
-            
-            int left_pressed = (get_gpio_l(LEFT_BUTTON) == LOW_LEVEL); 
-            int right_pressed = (get_gpio_l(RIGHT_BUTTON) == LOW_LEVEL);
-
-            int current_code = (is_breaking << 2) | (left_pressed << 1) | right_pressed;
-
-            if(current_code != last_screen_code) 
-            {
-              oled_clear();
-              if(is_breaking) 
-              {
-                oled_set_cursor(30, 2);
-                oled_print("BRAKING!");
-              } 
-              else if(left_pressed) 
-              {
-                oled_set_cursor(10, 2);
-                oled_print("<< LEFT");
-              } 
-              else if(right_pressed) 
-              {
-                oled_set_cursor(10, 2);
-                oled_print("RIGHT >>");
-              } 
-              else 
-              {
-                oled_set_cursor(40, 2);
-                oled_print("RIDE");
-              }
-              last_screen_code = current_code;
-            }
-
-            if (is_breaking) 
-            {
-              turnLedOn(); 
+              oled_set_cursor(30, 2);
+              oled_print("BRAKING!");
             } 
-            else if (left_pressed || right_pressed) 
+            else if(left_pressed) 
             {
-              ledToggle(); // Intermitente
+              oled_set_cursor(10, 2);
+              oled_print("<< LEFT");
+            } 
+            else if(right_pressed) 
+            {
+              oled_set_cursor(10, 2);
+              oled_print("RIGHT >>");
             } 
             else 
             {
-              turnLedOn(); // Luz de posición fija
+              oled_set_cursor(40, 2);
+              oled_print("RIDE");
             }
+            last_screen_code = current_code;
           }
-            
+
+          if (is_breaking) 
+          {
+            turnLedOn(); 
+          } 
+          else if (left_pressed || right_pressed) 
+          {
+            ledToggle(); 
+          } 
+          else 
+          {
+            turnLedOn(); 
+          }
+              
           wait_us(LOOP_DELAY_US);
           break;
         }
       }
     }
+  }
   return 0;
 }
