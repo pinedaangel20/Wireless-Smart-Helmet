@@ -1,11 +1,9 @@
-#ifndef BLINKER_H
-#define BLINKER_H
-
+#pragma once
 #include <stdint.h>
 
 typedef enum
 {
-  BLINKER_OFF,
+  BLINKER_OFF = 0,
   BLINKER_LEFT,
   BLINKER_RIGHT,
   BLINKER_HAZARD
@@ -14,5 +12,3 @@ typedef enum
 void blinkerInit(void);
 void blinkerSetState(BlinkerState state);
 void blinkerUpdate(uint32_t now_ms);
-
-#endif
