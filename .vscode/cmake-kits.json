@@ -1,7 +1,0 @@
-[
-  {
-    "name": "Pico ARM GCC",
-    "description": "Pico SDK Toolchain with GCC arm-none-eabi",
-    "toolchainFile": "${workspaceFolder}/.pico-sdk/cmake/preload/toolchains/pico_arm_cortex_m0plus_gcc.cmake"
-  }
-]

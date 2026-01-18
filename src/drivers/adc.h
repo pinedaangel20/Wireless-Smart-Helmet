@@ -14,16 +14,16 @@
 /**
  * @brief Busca el registro CS y pone el bit EN en 1 para activar el adc
  */
-void adc_init();
+void my_adc_init();
 
 /**
  * @brief Conecta el motor al pin correcto (HALL -> GPIO26 = canal 0)
  * @param channel canal al que se debe de conectar el pin
  */
-void adc_select_input(int channel);
+void my_adc_select_input(int channel);
 
 /**
  * @brief mide el valor que lee el adc
  * @return result - el valor de layo el adc
  */
-int adc_read(); 
+int my_adc_read(); 

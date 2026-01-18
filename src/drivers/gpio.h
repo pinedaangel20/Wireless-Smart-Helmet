@@ -4,12 +4,12 @@
 // * PIN CONFIG 
 #define LED_PIN 16
 #define SWITCH_PIN 18
-#define LEFT_BUTTON 19
-#define RIGHT_BUTTON 20
+#define LEFT_BUTTON 20
+#define RIGHT_BUTTON 21
 // * REGISTERS & OFFSETS 
 // SIO
 #define SIO_BASE 0xD0000000
-#define GPIO_IN 0x004 // Input read register
+#define MYGPIO_IN 0x004 // Input read register
 #define GPIO_OUT_SET 0x014 // Atomic bit set
 #define GPIO_OUT_CLR 0x018 // Atomic bit clear
 #define GPIO_OE_SET 0x024 // Output enable bit set
@@ -40,7 +40,7 @@
 /**
  * @brief Inicializa los periféricos (LEDs y Botones) con su configuración por defecto
  */
-void gpio_init(void);
+void my_gpio_init(void);
 
 /**
  * @brief Establece el nivel lógico de un pin de salida (High/Low)

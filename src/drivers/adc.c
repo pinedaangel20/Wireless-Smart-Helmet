@@ -4,7 +4,7 @@
 /* BASE REGISTER POINTER */
 static volatile uint32_t* adc_reg_base = (volatile uint32_t*)ADC_BASE;
 
-void adc_init()
+void my_adc_init()
 {
   volatile uint32_t* reg = (adc_reg_base + (CS >> 2));
   uint32_t value = *reg;
@@ -14,7 +14,7 @@ void adc_init()
   wait_us(20);
 }
 
-void adc_select_input(int channel)
+void my_adc_select_input(int channel)
 {
   if (channel < 0 || channel > 3)
   {
@@ -29,7 +29,7 @@ void adc_select_input(int channel)
   *reg = value; // escrbir el valor del canal de vuelta en CS
 }
 
-int adc_read()
+int my_adc_read()
 {
   volatile uint32_t* reg = (adc_reg_base + (CS >> 2));
   uint32_t value = *reg;

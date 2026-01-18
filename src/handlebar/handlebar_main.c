@@ -1,139 +1,191 @@
-#include <stdio.h>
-
-#include "led.h"
-#include "adc.h"
-#include "buttons.h"
 #include "gpio.h"
+#include "adc.h"
+#include "led.h"
+#include "pwm.h"
 #include "hall.h"
 #include "i2c.h"
-#include "led.h"
 #include "oled.h"
-#include "pwm.h"
-#include "util.h"
+#include "utils.h"
 
-#define BOOT_DELAY_US 2000000 // 2 segundos
-#define PAIRING_DELAY_US 500000 // 0.5 segundos
-#define CONNECTED_DELAY_US 1500000 // 1.5 segundos 
-#define LOOP_DELAY_US 50000 // 50 ms 
+// Configuraciones de tiempo
+#define BOOT_DELAY_US 2000000 
+#define PAIRING_STEP_US 500000 // 0.5 segundos por paso
+#define PAIRING_STEPS 10 // 10 pasos = 5 segundos total
+#define LOOP_DELAY_US 100000 // 100ms velocidad del bucle principal
+#define HALL_ADC_CHANNEL 0 
 
-typedef enum
-{
-  STATE_BOOT,
-  STATE_PAIRING,
-  STATE_CONNECTED,
-  STATE_RUNNING
+// Estados del sistema
+typedef enum {
+    STATE_BOOT,
+    STATE_PAIRING,
+    STATE_CONNECTED,
+    STATE_RUNNING
 } system_state;
 
-int main()
-{
-  // configurar botones y switch
-  gpio_init();
-  // inicializar adc
-  adc_init();
-  // inicializar LED para funcion pwm
-  pwm_init_led();
-  // inicializar bus y oled con secuencia de arranque
-  i2c_init();
-  oled_init();
-  oled_clear();
-  // state inicial del programa
-  system_state current_state = STATE_BOOT; 
-  
-  int last_state = -1; // para actualizar pantalla
-  int dots = 0;
+int main() 
+{    
+    // inicializa LED, Botones y Switch en modo GPIO normal 
+    my_gpio_init();      
+    // inicializa el ADC y conecta el canal 0 para el Hall
+    my_adc_init();       
+    my_adc_select_input(HALL_ADC_CHANNEL); 
+    // Inicializa pantalla OLED
+    oled_init();         
+    oled_clear();
 
-  while (1)
-  {
-    switch (current_state)
+    // prueba de vida al encender
+    for(int i = 0; i < 3; i++)
+     {
+      turnLedOn();
+      wait_us(150000);
+      turnLedOff();
+      wait_us(150000);
+    }
+
+    system_state current_state = STATE_BOOT;
+    
+    // variables de estado
+    int dots = 0;
+    int last_switch_state = -1; // -1 fuerza a pintar la pantalla la primera vez
+    int last_screen_code = -1; // para no borrar la pantalla si no cambia el mensaje
+
+    while(1) 
     {
-      case STATE_BOOT:
-        oled_set_cursor(30, 3); // Centrado aprox
-        oled_print("HELLO");
-        wait_us(BOOT_DELAY_US); 
-        oled_clear();
-        current_state = STATE_PAIRING;
-        break;
+      switch(current_state) 
+      {
+        case STATE_BOOT:
+          oled_set_cursor(30, 3);
+          oled_print("WELCOME");
+          wait_us(BOOT_DELAY_US);
+          oled_clear();
+          current_state = STATE_PAIRING;
+          break;
 
-      case STATE_PAIRING: 
-        oled_set_cursor(20, 3);
-        oled_print("PAIRING");
+        case STATE_PAIRING:
+          oled_set_cursor(20, 3);
+          oled_print("PAIRING");
+            
+          // Bucle de 10 pasos x 0.5s = 5 segundos
+          for(int i=0; i<PAIRING_STEPS; i++) 
+          {
+            oled_set_cursor(80, 3);
+            if(dots == 0) 
+            {
+              oled_print("   "); // borra puntos viejos
+            } 
+            if(dots > 0) 
+            {
+              oled_print(".");
+            }
+            if(dots > 1) 
+            {
+              oled_print(".");
+            }
+            if(dots > 2) 
+            {
+              oled_print(".");
+            }
+            
+            dots++;
+            if(dots > 3) 
+            {
+              dots = 0;
+            }
+            
+            ledToggle(); // parpadeo
+            wait_us(PAIRING_STEP_US);
+          }
 
-        bool connected;
-        // TODO FUNKMODUL LOGIC to connect
-        for(int i=0; i< dots; i++) 
-        {
-          oled_draw_char('.');
-        }
-        // Borramos los puntos sobrantes con espacios si se reinicia
-        if(dots == 0) 
-        {
-          oled_print("   "); 
-        }
-
-        dots++;
-        if (dots > 3)
-        { 
-          dots = 0;
-        }
-
-        ledToggle(); 
-        wait_us(PAIRING_DELAY_US);
-
-        if (connected) 
-        { 
           current_state = STATE_CONNECTED;
-        }
-        break;
+          break;
 
-      case STATE_CONNECTED: 
-        oled_clear();
-        oled_set_cursor(20, 3);
-        oled_print("CONNECTED!");
-        wait_us(CONNECTED_DELAY_US);
-        turnLedOn();
-        current_state = STATE_RUNNING;
-        break;
+        case STATE_CONNECTED:
+          oled_clear();
+          oled_set_cursor(10, 3);
+          oled_print("CONECTED!");
+          turnLedOn(); 
+          wait_us(2000000); // 2 segundosh
+          oled_clear();
+          current_state = STATE_RUNNING;
+          break;
 
-      case STATE_RUNNING:
-
-        float brake_percentage = read_break_percentage();
-        int breaking = (brake_percentage > 25.0f);
-        int left = (get_gpio_l(LEFT_BUTTON) << 2);
-        int right = (get_gpio_l(RIGHT_BUTTON) << 1);
-        
-        int state = (breaking << 2) | (left << 1) | (right);
-
-        // actualizar la pantalla si algo cambió 
-        if (state != last_state) 
+        case STATE_RUNNING: 
         {
-          oled_clear(); // Borramos solo al cambiar de estado
-          oled_set_cursor(0, 2); 
-
-          if (breaking) 
+          int switch_val = get_gpio_l(SWITCH_PIN); 
+          if(switch_val == HIGH_LEVEL) 
           {
-            oled_set_cursor(30, 2); // Centrar un poco
-            oled_print("BRAKE!!");
-          } 
-          else if (left) 
-          {
-            oled_print("<< TURN LEFT");
-          } 
-          else if (right) 
-          {
-            oled_print("TURN RIGHT >>");
+            // MODO APAGADO / STANDBY 
+            if(last_switch_state != 0) 
+            {
+              oled_clear();
+              oled_set_cursor(20, 3);
+              oled_print("SWITCH OFF");
+              turnLedOff();
+              last_switch_state = 0;
+              last_screen_code = -1; // reset codigo de pantalla
+            }
           } 
           else 
           {
-            oled_set_cursor(40, 2);
-            oled_print("RIDE"); 
+            // RIDE
+            if(last_switch_state != 1) 
+            {
+              oled_clear(); // Borrar "SWITCH OFF"
+              last_switch_state = 1;
+            }
+
+            float brake_pct = read_break_percentage();
+            int is_breaking = (brake_pct > 50.0f); // Umbral de freno
+            
+            int left_pressed = (get_gpio_l(LEFT_BUTTON) == LOW_LEVEL); 
+            int right_pressed = (get_gpio_l(RIGHT_BUTTON) == LOW_LEVEL);
+
+            int current_code = (is_breaking << 2) | (left_pressed << 1) | right_pressed;
+
+            if(current_code != last_screen_code) 
+            {
+              oled_clear();
+              if(is_breaking) 
+              {
+                oled_set_cursor(30, 2);
+                oled_print("BRAKING!");
+              } 
+              else if(left_pressed) 
+              {
+                oled_set_cursor(10, 2);
+                oled_print("<< LEFT");
+              } 
+              else if(right_pressed) 
+              {
+                oled_set_cursor(10, 2);
+                oled_print("RIGHT >>");
+              } 
+              else 
+              {
+                oled_set_cursor(40, 2);
+                oled_print("RIDE");
+              }
+              last_screen_code = current_code;
+            }
+
+            if (is_breaking) 
+            {
+              turnLedOn(); 
+            } 
+            else if (left_pressed || right_pressed) 
+            {
+              ledToggle(); // Intermitente
+            } 
+            else 
+            {
+              turnLedOn(); // Luz de posición fija
+            }
           }
             
-          last_state = state; // guardamos memoria
+          wait_us(LOOP_DELAY_US);
+          break;
         }
-                
-        // pausa para no saturar procesador
-        wait_us(LOOP_DELAY_US);
-        break;
+      }
     }
-  }
+  return 0;
 }

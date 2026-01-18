@@ -34,7 +34,7 @@ int get_gpio_l(int pin)
     return -1;
   }
 
-  uint32_t reg = *(sio_base + (GPIO_IN >> 2));
+  uint32_t reg = *(sio_base + (MYGPIO_IN >> 2));
   int input_l = (int)((reg >> pin) & 1u);
   
   return input_l;
@@ -119,7 +119,7 @@ void set_gpio_p(int pin, int p)
   *pad_reg = value;
 }
 
-void gpio_init()
+void my_gpio_init()
 {
   // * LED
   set_gpio_func(LED_PIN, FUNC_SIO);

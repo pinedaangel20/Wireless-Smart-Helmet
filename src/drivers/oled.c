@@ -10,7 +10,7 @@ static int starting_x = 0;
 void oled_init() 
 {
    // encender el bus
-   i2c_init(); 
+   my_i2c_init(); 
 
    // apagar para configurar
    oled_send_command(SSD1306_DISPLAY_OFF);
@@ -109,14 +109,14 @@ void oled_render()
 
 void oled_send_command(int cmd)
 {
-  i2c_write_byte(SSD1306_CONTROL_CMD); // enviar byte de control para comando
-  i2c_write_byte(cmd); // enviar comando real
+  i2c_write_byte(SSD1306_CONTROL_CMD, 0); // enviar byte de control para comando
+  i2c_write_byte(cmd, 1); // enviar comando real
 }
 
 void oled_send_data(int byte)
 {
-  i2c_write_byte(SSD1306_CONTROL_DATA); // enviar byte de control para datos graficos
-  i2c_write_byte(byte); // envia byte de pixel
+  i2c_write_byte(SSD1306_CONTROL_DATA, 0); // enviar byte de control para datos graficos
+  i2c_write_byte(byte, 1); // envia byte de pixel
 }
 
 void oled_set_pixel(int x, int y, int color) 
@@ -149,7 +149,7 @@ void oled_draw_char(char c)
   oled_send_command(cursor_y);
   oled_send_command((SSD1306_HEIGHT / 8) - 1);
 
-  int start_index = 32; 
+  int start_index = 0; 
   int char_ascii = (int)c;
   int stride = 5;
 

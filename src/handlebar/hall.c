@@ -2,7 +2,7 @@
 
 float read_break_percentage()
 {
-  int raw_value = adc_read();
+  int raw_value = my_adc_read();
 
   if (raw_value < HALL_MIN_VAL)
   {

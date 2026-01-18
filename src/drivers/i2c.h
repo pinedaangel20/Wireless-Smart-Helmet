@@ -19,15 +19,24 @@
 #define SDA_PIN 4
 #define SCL_PIN 5
 #define OLED_ADDR 0x3C
+// DEFINEN LA VELOCIDAD DEL RELOJ
+#define IC_FS_SCL_HCNT 0x1C  // Fast Speed High Count
+#define IC_FS_SCL_LCNT 0x20  // Fast Speed Low Count
+// RESET CONTROLLER 
+#define RESETS_BASE 0x4000C000 // Register base
+#define RESETS_RESET 0x0 // Offset del registro RESET
+#define RESETS_RESET_DONE 0x8 // Offset para verificar si ya desperto
+#define RESETS_I2C0_BIT 3 // Bit del I2C0
 
 /**
  * @brief Inicializa el bus I2C - Cofigura velocidad y pines
  */
-void i2c_init();
+void my_i2c_init();
 
 /**
  * @brief Envia un byte por el cable y lo escribe dentro del registro IC_DATA_CMD
  * @param val byte a escribir
+ * @param stop 1 para enviar señal de STOP al final (liberar bus), 0 para seguir enviando
  */
-void i2c_write_byte(int val);
+void i2c_write_byte(int val, int stop);
 
