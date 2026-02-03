@@ -1,8 +1,8 @@
 # 🚴‍♂️ Bike Blinker: Wireless Smart Helmet Signaling System
 
-[![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-orange.svg)](https://gitlab.tugraz.at/microcontroller/ws25/group-bikeblinker)
-[![Plataforma](https://img.shields.io/badge/Plataforma-Raspberry%20Pi%20Pico-blue.svg)](https://www.raspberrypi.com/products/raspberry-pi-pico/)
-[![Lenguaje](https://img.shields.io/badge/Lenguaje-C-green.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Estado del Proyecto](https://img.shields.io/badge/State-In%20Progress-orange.svg)](https://github.com/pinedaangel20/Wireless-Smart-Helmet.git)
+[![Plataforma](https://img.shields.io/badge/Plataform-Raspberry%20Pi%20Pico-blue.svg)](https://www.raspberrypi.com/products/raspberry-pi-pico/)
+[![Lenguaje](https://img.shields.io/badge/Language-C-green.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
 
 ## Project Description
 
