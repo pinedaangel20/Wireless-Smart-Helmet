@@ -169,7 +169,7 @@ int main()
           }
 
           float brake_pct = read_break_percentage();
-          int is_breaking = (brake_pct > 10.0f); 
+          int is_breaking = (brake_pct > 50.0f); 
           
           int left_pressed = (get_gpio_l(LEFT_BUTTON) == LOW_LEVEL); 
           int right_pressed = (get_gpio_l(RIGHT_BUTTON) == LOW_LEVEL);
